@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  database:
+    image: mysql:8.0
+    container_name: real_estate_db_prod
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-rootpassword}
+      MYSQL_DATABASE: ${DB_NAME:-real_estate_db}
+      MYSQL_USER: ${DB_USER:-appuser}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-apppassword}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data_prod:/var/lib/mysql
+    networks:
+      - real_estate_network
+
+  backend:
+    build:
+      context: ./real-estate-manager/backend
+      dockerfile: Dockerfile
+    container_name: real_estate_backend_prod
+    env_file:
+      - ./real-estate-manager/backend/.env.prod
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+    networks:
+      - real_estate_network
+
+  frontend:
+    build:
+      context: ./real-estate-manager/frontend
+      dockerfile: Dockerfile
+    container_name: real_estate_frontend_prod
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8080/api
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - real_estate_network
+
+volumes:
+  mysql_data_prod:
+
+networks:
+  real_estate_network:
+    driver: bridge

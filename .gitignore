@@ -1,0 +1,263 @@
+# Real Estate Manager - .gitignore
+
+# === GENERAL ===
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*~
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.metadata
+.classpath
+.settings/
+
+# === GO BACKEND ===
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool
+*.out
+coverage.out
+coverage.html
+
+# Go workspace file
+go.work
+
+# Air tmp directory (hot reload)
+backend/tmp/
+backend/server
+
+# Go build output
+backend/main
+backend/real-estate-manager
+
+# Go module cache
+go.sum.backup
+
+# === NODE.JS / NEXT.JS FRONTEND ===
+# Dependencies
+frontend/node_modules/
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+
+# Runtime data
+frontend/pids
+frontend/*.pid
+frontend/*.seed
+frontend/*.pid.lock
+
+# Coverage directory used by tools like istanbul
+frontend/coverage/
+frontend/.nyc_output
+
+# Grunt intermediate storage
+frontend/.grunt
+
+# Bower dependency directory
+frontend/bower_components
+
+# node-waf configuration
+frontend/.lock-wscript
+
+# Compiled binary addons
+frontend/build/Release
+
+# Dependency directories
+frontend/jspm_packages/
+
+# TypeScript cache
+frontend/*.tsbuildinfo
+
+# Optional npm cache directory
+frontend/.npm
+
+# Optional eslint cache
+frontend/.eslintcache
+
+# Optional REPL history
+frontend/.node_repl_history
+
+# Output of 'npm pack'
+frontend/*.tgz
+
+# Yarn Integrity file
+frontend/.yarn-integrity
+
+# Next.js build output
+frontend/.next/
+frontend/out/
+
+# Next.js cache
+frontend/.next
+
+# Nuxt.js build / generate output
+frontend/.nuxt
+frontend/dist
+
+# Storybook build outputs
+frontend/.out
+frontend/.storybook-out
+
+# === ENVIRONMENT VARIABLES ===
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
+backend/.env
+frontend/.env
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+# === DATABASE ===
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Database dumps
+*.sql.gz
+*.dump
+
+# === DOCKER ===
+# Docker build context exclusions are handled in .dockerignore
+
+# === UPLOADS & MEDIA ===
+# Uploaded files (keep directory structure but ignore content)
+backend/uploads/images/*
+!backend/uploads/images/.gitkeep
+real-estate-manager/backend/uploads/images/*
+!real-estate-manager/backend/uploads/images/.gitkeep
+
+# === LOGS ===
+# Log files
+*.log
+logs/
+*.log.*
+backend/logs/
+frontend/logs/
+
+# Build logs
+backend/tmp/build-errors.log
+
+# === CERTIFICATES & KEYS ===
+# SSL certificates
+*.pem
+*.key
+*.crt
+*.cert
+
+# Private keys
+private.key
+*.private
+
+# === TESTING ===
+# Test artifacts
+test-results/
+coverage/
+.coverage
+
+# === BACKUP FILES ===
+# Backup files
+*.bak
+*.backup
+*.old
+*.orig
+
+# === TEMPORARY FILES ===
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# === DOCUMENTATION ===
+# Generated documentation (keep manual docs)
+docs/generated/
+
+# === PACKAGE MANAGERS ===
+# Yarn
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# npm
+package-lock.json.backup
+
+# === SCREENSHOTS ===
+# Keep screenshots for documentation but ignore any temporary ones
+screenshots/temp/
+screenshots/tmp/
+*-screenshot-*.png
+
+# === SECURITY ===
+# Security scan results
+security-scan.json
+vulnerability-report.json
+
+# JWT secrets (in case they're accidentally created as files)
+jwt-secret.txt
+*.secret
+
+# === MISC ===
+# Vim
+*.swp
+*.swo
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
+
+# Archives
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+
+# Runtime
+*.pid
+*.seed
+*.pid.lock
+
+# Optional REPL history
+.repl_history
+
+# Output of 'go generate'
+*_gen.go

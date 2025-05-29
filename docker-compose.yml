@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  database:
+    image: mysql:8.0
+    container_name: real_estate_db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: real_estate_db
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: apppassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - real_estate_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  backend:
+    build:
+      context: ./real-estate-manager/backend
+      dockerfile: Dockerfile.dev
+    container_name: real_estate_backend
+    environment:
+      DB_HOST: database
+      DB_PORT: 3306
+      DB_USER: appuser
+      DB_PASSWORD: apppassword
+      DB_NAME: real_estate_db
+      JWT_SECRET: dev_jwt_secret_b2f8a9c6e3d5f7a8b1c2d4e6f8a9b2c5d7e9f1a3b5c7d9e2f4a6b8c1d3e5f7a9
+      PORT: 8080
+      GIN_MODE: debug
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./real-estate-manager/backend:/app
+      - go_mod_cache:/go/pkg/mod
+    depends_on:
+      database:
+        condition: service_healthy
+    networks:
+      - real_estate_network
+    command: ["air", "-c", ".air.toml"]
+
+  frontend:
+    build:
+      context: ./real-estate-manager/frontend
+      dockerfile: Dockerfile.dev
+    container_name: real_estate_frontend
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8080/api
+      NODE_ENV: development
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./real-estate-manager/frontend:/app
+      - /app/node_modules
+      - /app/.next
+    depends_on:
+      - backend
+    networks:
+      - real_estate_network
+
+volumes:
+  mysql_data:
+  go_mod_cache:
+
+networks:
+  real_estate_network:
+    driver: bridge
