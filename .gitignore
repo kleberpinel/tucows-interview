@@ -126,6 +126,7 @@ frontend/.storybook-out
 .env.production.local
 .env.*.local
 backend/.env
+backend/.env.prod
 frontend/.env
 frontend/.env.local
 frontend/.env.development.local
@@ -261,3 +262,23 @@ tramp
 
 # Output of 'go generate'
 *_gen.go
+
+# === SECURITY & ENVIRONMENT ===
+# Environment files - NEVER commit these!
+*.env
+*.env.local
+*.env.development
+*.env.test
+*.env.production
+.env.dev
+.env.prod
+.env.staging
+
+# Security sensitive files
+JWT_SECRET
+*.key
+*.pem
+*.p12
+*.pfx
+secrets.json
+config/secrets.yml

@@ -2,12 +2,19 @@ package utils
 
 import (
 	"errors"
+	"os"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
 )
 
-var jwtSecret = []byte("your_secret_key")
+func getJWTSecret() []byte {
+	secret := os.Getenv("JWT_SECRET")
+	if secret == "" {
+		panic("JWT_SECRET environment variable is required")
+	}
+	return []byte(secret)
+}
 
 type Claims struct {
 	Username string `json:"username"`
@@ -24,12 +31,12 @@ func GenerateToken(username string) (string, error) {
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return token.SignedString(jwtSecret)
+	return token.SignedString(getJWTSecret())
 }
 
 func ValidateToken(tokenString string) (*Claims, error) {
 	token, err := jwt.ParseWithClaims(tokenString, &Claims{}, func(token *jwt.Token) (interface{}, error) {
-		return jwtSecret, nil
+		return getJWTSecret(), nil
 	})
 
 	if err != nil || !token.Valid {

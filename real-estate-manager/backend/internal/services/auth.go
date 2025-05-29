@@ -21,7 +21,7 @@ func NewAuthService(userRepo repository.UserRepository) *AuthService {
 	// Get JWT secret from environment variable
 	jwtSecret := os.Getenv("JWT_SECRET")
 	if jwtSecret == "" {
-		jwtSecret = "your_default_secret_key_change_this_in_production" // Fallback for development
+		panic("JWT_SECRET environment variable is required")
 	}
 
 	return &AuthService{

@@ -29,26 +29,26 @@ This project is a full-stack application for managing real estate properties. It
 This project demonstrates the following technical requirements:
 
 - ✅ **Backend application written in Go**
-  - [JWT authentication](real-estate-manager/backend/internal/services/auth.go) - Secure user authentication with JSON Web Tokens
-  - [Restricted and public APIs](real-estate-manager/backend/cmd/server/main.go) - Protected routes using middleware
-  - [Usage of Go Channels and Routines](real-estate-manager/backend/internal/services/simplyrets.go) - Concurrent property processing from SimplyRETS API using goroutines and channels for job management
+  - [JWT authentication](backend/internal/services/auth.go) - Secure user authentication with JSON Web Tokens
+  - [Restricted and public APIs](backend/cmd/server/main.go) - Protected routes using middleware
+  - [Usage of Go Channels and Routines](backend/internal/services/simplyrets.go) - Concurrent property processing from SimplyRETS API using goroutines and channels for job management
 
 - ✅ **Frontend application written in TypeScript with Next.js**
-  - [Next.js 14 with App Router](real-estate-manager/frontend/src/app/) - Modern React framework with TypeScript
-  - [TypeScript types and interfaces](real-estate-manager/frontend/src/types/) - Type-safe development
+  - [Next.js 14 with App Router](frontend/src/app/) - Modern React framework with TypeScript
+  - [TypeScript types and interfaces](frontend/src/types/) - Type-safe development
 
 - ✅ **Several REST endpoints on the backend invoked from frontend**
-  - [API endpoints](real-estate-manager/backend/internal/handlers/) - Authentication, property management, and SimplyRETS integration
-  - [Frontend API client](real-estate-manager/frontend/src/lib/api.ts) - Type-safe API calls from React components
+  - [API endpoints](backend/internal/handlers/) - Authentication, property management, and SimplyRETS integration
+  - [Frontend API client](frontend/src/lib/api.ts) - Type-safe API calls from React components
 
 - ✅ **Integration with database**
-  - [MySQL database](real-estate-manager/backend/pkg/database/) - Full database integration with migrations
-  - [Repository pattern](real-estate-manager/backend/internal/repository/) - Clean data access layer
-  - [Database migrations](real-estate-manager/backend/migrations/) - Schema versioning and management
+  - [MySQL database](backend/pkg/database/) - Full database integration with migrations
+  - [Repository pattern](backend/internal/repository/) - Clean data access layer
+  - [Database migrations](backend/migrations/) - Schema versioning and management
 
 - ✅ **Developed using Visual Studio Code with GitHub Copilot**
-  - [Comprehensive test suite](real-estate-manager/backend/internal/services/simplyrets_test.go) - Table-driven tests created with AI assistance
-  - [Clean architecture](real-estate-manager/backend/internal/) - Well-structured Go application following best practices
+  - [Comprehensive test suite](backend/internal/services/simplyrets_test.go) - Table-driven tests created with AI assistance
+  - [Clean architecture](backend/internal/) - Well-structured Go application following best practices
 
 - ✅ **Able to run locally and with Docker Compose in a single command**
   - [Docker Compose setup](docker-compose.yml) - Complete development environment
@@ -88,108 +88,83 @@ By leveraging my domain knowledge from LionDesk/Lone Wolf, I can focus on demons
 ## Project Structure
 
 ```
-tucows-interview
-├── real-estate-manager
-│   ├── backend
-│   │   ├── cmd
-│   │   │   └── server
-│   │   │       └── main.go          # Entry point of the Go application
-│   │   ├── internal
-│   │   │   ├── handlers
-│   │   │   │   ├── auth.go          # Authentication handlers
-│   │   │   │   ├── properties.go     # Property-related handlers
-│   │   │   │   └── simplyrets.go     # SimplyRETS integration handlers
-│   │   │   ├── middleware
-│   │   │   │   └── auth.go          # JWT authentication middleware
-│   │   │   ├── mocks                # Generated gomock files
-│   │   │   │   ├── mock_user_repository.go
-│   │   │   │   └── mock_property_repository.go
-│   │   │   ├── models
-│   │   │   │   ├── property.go       # Property model definition
-│   │   │   │   └── user.go           # User model definition
-│   │   │   ├── repository
-│   │   │   │   ├── property.go       # Database interaction for properties
-│   │   │   │   ├── property_test.go  # Repository tests with sqlmock
-│   │   │   │   ├── user.go           # Database interaction for users
-│   │   │   │   └── user_test.go      # Repository tests with sqlmock
-│   │   │   └── services
-│   │   │       ├── auth.go          # Business logic for authentication
-│   │   │       ├── auth_test.go     # Service tests with gomock
-│   │   │       ├── property.go       # Business logic for property management
-│   │   │       ├── property_test.go  # Service tests with gomock
-│   │   │       ├── simplyrets.go     # SimplyRETS integration service
-│   │   │       └── simplyrets_test.go # SimplyRETS service tests
-│   │   ├── pkg
-│   │   │   ├── database
-│   │   │   │   ├── mysql.go         # Database connection
-│   │   │   │   ├── migrate.go       # Migration handling
-│   │   │   │   ├── setup.go         # Database setup utilities
-│   │   │   │   └── config.go        # Database configuration
-│   │   │   └── utils
-│   │   │       └── jwt.go           # JWT token utilities
-│   │   ├── migrations
-│   │   │   ├── 000001_create_users_table.up.sql
-│   │   │   ├── 000001_create_users_table.down.sql
-│   │   │   ├── 000002_create_properties_table.up.sql
-│   │   │   ├── 000002_create_properties_table.down.sql
-│   │   │   ├── 000003_add_photos_to_properties.up.sql
-│   │   │   ├── 000003_add_photos_to_properties.down.sql
-│   │   │   ├── 000004_add_simplyrets_fields.up.sql
-│   │   │   └── 000004_add_simplyrets_fields.down.sql
-│   │   ├── uploads
-│   │   │   └── images               # Uploaded property images
-│   │   ├── .air.toml                # Air configuration for hot reloading
-│   │   ├── Dockerfile               # Production Docker configuration
-│   │   ├── Dockerfile.dev           # Development Docker configuration
-│   │   ├── go.mod                   # Go module definition
-│   │   └── go.sum                   # Dependency checksums
-│   └── frontend
-│       ├── src
-│       │   ├── app
-│       │   │   ├── login
-│       │   │   │   └── page.tsx      # Login page component
-│       │   │   ├── properties
-│       │   │   │   ├── page.tsx      # Properties list page
-│       │   │   │   ├── create
-│       │   │   │   │   └── page.tsx  # Create property page
-│       │   │   │   └── [id]
-│       │   │   │       ├── page.tsx  # Property details page
-│       │   │   │       └── edit
-│       │   │   │           └── page.tsx # Edit property page
-│       │   │   ├── layout.tsx        # Application layout
-│       │   │   └── page.tsx          # Main landing page
-│       │   ├── components
-│       │   │   ├── AuthGuard.tsx     # Authentication guard component
-│       │   │   ├── PropertyForm.tsx   # Property form component
-│       │   │   ├── PropertyList.tsx    # Property list component
-│       │   │   ├── PropertyPhotoGallery.tsx # Photo gallery component
-│       │   │   ├── SimplyRETSProcessor.tsx # SimplyRETS integration component
-│       │   │   └── LoginForm.tsx       # Login form component
-│       │   ├── lib
-│       │   │   ├── api.ts             # API calls to the backend
-│       │   │   ├── auth.ts            # Authentication handling
-│       │   │   └── config.ts          # Configuration utilities
-│       │   └── types
-│       │       └── property.ts        # TypeScript types for properties
-│       ├── Dockerfile               # Production Docker configuration
-│       ├── Dockerfile.dev           # Development Docker configuration
-│       ├── package.json             # npm configuration
-│       ├── next.config.js           # Next.js configuration (enhanced for Docker)
-│       └── tsconfig.json            # TypeScript configuration
-├── screenshots                      # Application screenshots for documentation
-│   ├── 01-homepage.png
-│   ├── 02-login-page.png
-│   ├── 03-properties-page-authenticated.png
-│   ├── 04-create-property-page.png
-│   ├── 05-edit-property-page.png
-│   ├── 06-property-details-page.png
-│   ├── 07-property-listing-page.png
-│   └── README.md                    # Screenshots documentation
-├── docker-compose.yml              # Docker Compose configuration for development
-├── docker-compose.prod.yml         # Docker Compose configuration for production
-├── init.sql                        # Database initialization
-├── .gitignore                      # Git ignore rules
-└── README.md                       # Project documentation (this file)
+real-estate-manager
+├── backend
+│   ├── cmd
+│   │   └── server
+│   │       └── main.go          # Entry point of the Go application
+│   ├── internal
+│   │   ├── handlers
+│   │   │   ├── auth.go          # Authentication handlers
+│   │   │   └── properties.go     # Property-related handlers
+│   │   ├── middleware
+│   │   │   └── auth.go          # JWT authentication middleware
+│   │   ├── mocks                # Generated gomock files
+│   │   │   ├── mock_user_repository.go
+│   │   │   └── mock_property_repository.go
+│   │   ├── models
+│   │   │   ├── property.go       # Property model definition
+│   │   │   └── user.go           # User model definition
+│   │   ├── repository
+│   │   │   ├── property.go       # Database interaction for properties
+│   │   │   ├── property_test.go  # Repository tests with sqlmock
+│   │   │   ├── user.go           # Database interaction for users
+│   │   │   └── user_test.go      # Repository tests with sqlmock
+│   │   └── services
+│   │       ├── auth.go          # Business logic for authentication
+│   │       ├── auth_test.go     # Service tests with gomock
+│   │       ├── property.go       # Business logic for property management
+│   │       └── property_test.go  # Service tests with gomock
+│   ├── pkg
+│   │   ├── database
+│   │   │   ├── mysql.go         # Database connection
+│   │   │   ├── migrate.go       # Migration handling
+│   │   │   ├── setup.go         # Database setup utilities
+│   │   │   └── config.go        # Database configuration
+│   │   └── utils
+│   │       └── jwt.go           # JWT token utilities
+│   ├── migrations
+│   │   ├── 000001_create_users_table.up.sql
+│   │   ├── 000001_create_users_table.down.sql
+│   │   ├── 000002_create_properties_table.up.sql
+│   │   └── 000002_create_properties_table.down.sql
+│   ├── .air.toml                # Air configuration for hot reloading
+│   ├── Dockerfile               # Production Docker configuration
+│   ├── Dockerfile.dev           # Development Docker configuration
+│   ├── go.mod                   # Go module definition
+│   └── go.sum                   # Dependency checksums
+├── frontend
+│   ├── src
+│   │   ├── app
+│   │   │   ├── login
+│   │   │   │   └── page.tsx      # Login page component
+│   │   │   ├── properties
+│   │   │   │   ├── page.tsx      # Properties list page
+│   │   │   │   ├── create
+│   │   │   │   │   └── page.tsx  # Create property page
+│   │   │   │   └── [id]
+│   │   │   │       └── edit
+│   │   │   │           └── page.tsx # Edit property page
+│   │   │   ├── layout.tsx        # Application layout
+│   │   │   └── page.tsx          # Main landing page
+│   │   ├── components
+│   │   │   ├── PropertyForm.tsx   # Property form component
+│   │   │   ├── PropertyList.tsx    # Property list component
+│   │   │   └── LoginForm.tsx       # Login form component
+│   │   ├── lib
+│   │   │   ├── api.ts             # API calls to the backend
+│   │   │   └── auth.ts            # Authentication handling
+│   │   └── types
+│   │       └── property.ts        # TypeScript types for properties
+│   ├── Dockerfile               # Production Docker configuration
+│   ├── Dockerfile.dev           # Development Docker configuration
+│   ├── package.json             # npm configuration
+│   ├── next.config.js           # Next.js configuration (enhanced for Docker)
+│   └── tsconfig.json            # TypeScript configuration
+├── docker-compose.yml           # Docker Compose configuration for development
+├── docker-compose.prod.yml      # Docker Compose configuration for production
+├── init.sql                     # Database initialization
+└── README.md                    # Project documentation
 ```
 
 ## Getting Started
@@ -448,37 +423,37 @@ mockgen -source=internal/repository/property.go -destination=internal/mocks/mock
 The following screenshots demonstrate the complete functionality of the Real Estate Manager application:
 
 ### 1. Homepage
-![Homepage](screenshots/01-homepage.png)
+![Homepage](../screenshots/01-homepage.png)
 
 The main landing page of the application, providing navigation to different sections and user authentication options.
 
 ### 2. Login & Registration
-![Login Page](screenshots/02-login-page.png)
+![Login Page](../screenshots/02-login-page.png)
 
 User authentication interface allowing users to log in with existing credentials or register a new account. 
 
 ### 3. Properties Dashboard
-![Properties Page](screenshots/03-properties-page-authenticated.png)
+![Properties Page](../screenshots/03-properties-page-authenticated.png)
 
 The main property management dashboard showing all available properties. This authenticated view includes options to create, edit, and delete properties, as well as the SimplyRETS integration for importing external property data.
 
 ### 4. Create New Property
-![Create Property](screenshots/04-create-property-page.png)
+![Create Property](../screenshots/04-create-property-page.png)
 
 Form interface for adding new properties to the system. Users can input property details including name, location, price, description, and upload photos.
 
 ### 5. Edit Property
-![Edit Property](screenshots/05-edit-property-page.png)
+![Edit Property](../screenshots/05-edit-property-page.png)
 
 Property editing interface allowing users to modify existing property information and update property photos.
 
 ### 6. Property Details
-![Property Details](screenshots/06-property-details-page.png)
+![Property Details](../screenshots/06-property-details-page.png)
 
 Detailed view of individual properties showing all property information, photo gallery, and management options.
 
 ### 7. Property Listing
-![Property Listing](screenshots/07-property-listing-page.png)
+![Property Listing](../screenshots/07-property-listing-page.png)
 
 Comprehensive property listing interface displaying all available properties in a clean, organized grid layout. This page serves as the main hub for property management and includes advanced functionality for importing external property data.
 
