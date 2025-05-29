@@ -267,10 +267,8 @@ tramp
 # Environment files - NEVER commit these!
 *.env
 *.env.local
-*.env.development
 *.env.test
 *.env.production
-.env.dev
 .env.prod
 .env.staging
 
