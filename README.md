@@ -423,37 +423,37 @@ mockgen -source=internal/repository/property.go -destination=internal/mocks/mock
 The following screenshots demonstrate the complete functionality of the Real Estate Manager application:
 
 ### 1. Homepage
-![Homepage](../screenshots/01-homepage.png)
+![Homepage](screenshots/01-homepage.png)
 
 The main landing page of the application, providing navigation to different sections and user authentication options.
 
 ### 2. Login & Registration
-![Login Page](../screenshots/02-login-page.png)
+![Login Page](screenshots/02-login-page.png)
 
 User authentication interface allowing users to log in with existing credentials or register a new account. 
 
 ### 3. Properties Dashboard
-![Properties Page](../screenshots/03-properties-page-authenticated.png)
+![Properties Page](screenshots/03-properties-page-authenticated.png)
 
 The main property management dashboard showing all available properties. This authenticated view includes options to create, edit, and delete properties, as well as the SimplyRETS integration for importing external property data.
 
 ### 4. Create New Property
-![Create Property](../screenshots/04-create-property-page.png)
+![Create Property](screenshots/04-create-property-page.png)
 
 Form interface for adding new properties to the system. Users can input property details including name, location, price, description, and upload photos.
 
 ### 5. Edit Property
-![Edit Property](../screenshots/05-edit-property-page.png)
+![Edit Property](screenshots/05-edit-property-page.png)
 
 Property editing interface allowing users to modify existing property information and update property photos.
 
 ### 6. Property Details
-![Property Details](../screenshots/06-property-details-page.png)
+![Property Details](screenshots/06-property-details-page.png)
 
 Detailed view of individual properties showing all property information, photo gallery, and management options.
 
 ### 7. Property Listing
-![Property Listing](../screenshots/07-property-listing-page.png)
+![Property Listing](screenshots/07-property-listing-page.png)
 
 Comprehensive property listing interface displaying all available properties in a clean, organized grid layout. This page serves as the main hub for property management and includes advanced functionality for importing external property data.
 
